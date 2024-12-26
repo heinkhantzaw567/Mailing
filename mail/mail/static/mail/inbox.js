@@ -60,13 +60,16 @@ function sending_email()
   
   }).then(response => response.json())
   .then(data => {
-    if (data.error)
-    {
-      alert(`${data.error}`)
-    }
-    else{
-      console.log(`${data.message}`)
-      alert(`${data.message}`)
+    console.log(data);
+    alert('hello');
+    if (data.error) {
+      console.error(data.error); 
+      // Display a more informative error message within the application
+      alert(data.error); 
+    } else {
+      console.log(data.message); 
+      // Display a success message within the application
+      alert(data.message); 
     }
   })
   
@@ -87,7 +90,7 @@ function create_mail(name)
     element.classList.add('mailbox');
     element.innerHTML = `<strong> ${email.recipients}</strong> <em>${email.subject}</em>  <small>${email.timestamp}<small>`;
     element.addEventListener('click', function() {
-      console.log('This element has been clicked!')
+      document.querySelector('#email-views').innerHTML =`<h1> ${email.recipients}`;
     });
      container.append(element);
     }) 
