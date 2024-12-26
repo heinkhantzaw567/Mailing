@@ -32,6 +32,7 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  create_mail(mailbox);
 }
 
 function sending_email()
@@ -61,8 +62,37 @@ function sending_email()
   .then(data => {
     if (data.error)
     {
-      alert()
+      alert(`${data.error}`)
     }
+    else{
+      console.log(`${data.message}`)
+      alert(`${data.message}`)
+    }
+  })
+  
+  
+}
+
+function create_mail(name)
+{
+  const container = document.createElement('div');
+  document.querySelector('#emails-view').append(container);
+  fetch (`emails/${name}`)
+  .then(response => response.json())
+  .then(emails => {
+    console.log(emails)
+    emails.forEach (email => {
+    const element= document.createElement('div');
+    // element.classList.add('container-lg');
+    element.classList.add('mailbox');
+    element.innerHTML = `<strong> ${email.recipients}</strong> <em>${email.subject}</em>  <small>${email.timestamp}<small>`;
+    element.addEventListener('click', function() {
+      console.log('This element has been clicked!')
+    });
+     container.append(element);
+    }) 
+
+    
   })
   
   
